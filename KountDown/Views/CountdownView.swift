@@ -42,3 +42,8 @@ struct CountdownView: View {
     }
 }
 
+#Preview {
+    CountdownView(targetDate: Date().addingTimeInterval(86400),
+                  onReset: {})
+}
+
