@@ -21,12 +21,19 @@ struct SetupView: View {
                 Text("Start Kount Down")
                     .font(.headline)
                     .padding()
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
             }
+            .background(Color.accentColor)
+            .foregroundColor(.white)
+            .cornerRadius(8)
         }
         .padding()
     }
+}
+
+#Preview {
+    SetupView(
+        targetDate: .constant(Date()),
+        onStart: {}
+    )
 }
 
