@@ -55,5 +55,6 @@ fastlane/test_output
 
 # Code Injection
 iOSInjectionProject/
-notes.org
+direction.org
 KountDown.xcodeproj/project.pbxproj
+notes.org
