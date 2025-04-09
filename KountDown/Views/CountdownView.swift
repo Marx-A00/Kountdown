@@ -31,12 +31,14 @@ struct CountdownView: View {
                     now = input
                 }
 
-            Button("Reset") {
+            Button(action: onReset) {
+                Text("Reset")
+                    .font(.caption)
+                    .padding()
                 // Optional reset logic later
-                onReset()
             }
-            .font(.caption)
             .foregroundColor(.gray)
+            .cornerRadius(8)
         }
         .padding()
     }

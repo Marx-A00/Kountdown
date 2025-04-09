@@ -15,7 +15,10 @@ struct SetupView: View {
                 in: Date()...,
                 displayedComponents: [.date, .hourAndMinute]
             )
+            .scaleEffect(1.5)
             .labelsHidden()
+            .frame(maxWidth: .infinity)
+            .padding(.vertical)
 
             Button(action: onStart) {
                 Text("Start Kount Down")
