@@ -14,20 +14,29 @@ struct KountDownApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if hasStarted {
-                CountdownView(
-                    targetDate: targetDate,
-                    onReset: {
-                        hasStarted = false
-                        targetDate = Date()
+            ZStack {
+                if hasStarted {
+                    CountdownView(
+                        targetDate: targetDate,
+                        onReset: {
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                hasStarted = false
+                                targetDate = Date()
+                            }
+                        }
+                    )
+                    .transition(.opacity)
+                } else {
+                    SetupView(targetDate: $targetDate) {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            hasStarted = true
+                        }
                     }
-                )
-    
-            } else {
-                SetupView(targetDate: $targetDate) {
-                    hasStarted = true
+                    .transition(.opacity)
                 }
             }
+            .animation(.easeInOut(duration: 0.5), value: hasStarted)
+            .preferredColorScheme(.light)
         }
     }
 }
