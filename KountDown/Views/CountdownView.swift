@@ -7,6 +7,10 @@ struct CountdownView: View {
     @State private var now: Date = Date()
     @State private var isAnimating = false
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    // Define colors using RGB directly
+    let creamColor = Color(red: 248/255, green: 237/255, blue: 217/255)
+    let darkColor = Color(red: 11/255, green: 18/255, blue: 21/255)
 
     var timeRemaining: TimeInterval {
         max(targetDate.timeIntervalSince(now), 0)
@@ -27,54 +31,73 @@ struct CountdownView: View {
     }
 
     var body: some View {
-        VStack(spacing: 50) {
+        VStack {
+            Spacer()
+            
             Text("COUNTDOWN")
-                .font(.system(size: 20, weight: .light, design: .default))
-                .tracking(5)
+                .font(.system(size: 30, weight: .light, design: .default))
+                .foregroundColor(darkColor)
+                .tracking(8)
+                .padding(.bottom, 60)
             
             if isCompleted {
                 Text("COMPLETED")
-                    .font(.system(size: 24, weight: .light, design: .default))
-                    .tracking(2)
+                    .font(.system(size: 42, weight: .light, design: .default))
+                    .foregroundColor(darkColor)
+                    .tracking(4)
                     .opacity(isAnimating ? 1.0 : 0.7)
                     .animation(
                         Animation.easeInOut(duration: 1.2)
                             .repeatForever(autoreverses: true),
                         value: isAnimating
                     )
+                    .padding(.bottom, 60)
             } else {
-                HStack(spacing: 20) {
-                    MinimalTimeBlock(value: timeComponents.days, unit: "D")
+                HStack(spacing: 16) {
+                    TimeColumn(value: timeComponents.days, unit: "DAYS", textColor: darkColor)
+                    
                     Text(":")
-                        .font(.system(size: 36, weight: .thin))
-                        .offset(y: -8)
-                    MinimalTimeBlock(value: timeComponents.hours, unit: "H")
+                        .font(.system(size: 60, weight: .thin))
+                        .foregroundColor(darkColor)
+                        .offset(y: -10)
+                        
+                    TimeColumn(value: timeComponents.hours, unit: "HOURS", textColor: darkColor)
+                    
                     Text(":")
-                        .font(.system(size: 36, weight: .thin))
-                        .offset(y: -8)
-                    MinimalTimeBlock(value: timeComponents.minutes, unit: "M")
+                        .font(.system(size: 60, weight: .thin))
+                        .foregroundColor(darkColor)
+                        .offset(y: -10)
+                        
+                    TimeColumn(value: timeComponents.minutes, unit: "MINS", textColor: darkColor)
+                    
                     Text(":")
-                        .font(.system(size: 36, weight: .thin))
-                        .offset(y: -8)
-                    MinimalTimeBlock(value: timeComponents.seconds, unit: "S")
+                        .font(.system(size: 60, weight: .thin))
+                        .foregroundColor(darkColor)
+                        .offset(y: -10)
+                        
+                    TimeColumn(value: timeComponents.seconds, unit: "SECS", textColor: darkColor)
                 }
+                .padding(.horizontal)
+                .padding(.bottom, 60)
             }
+            
+            Spacer()
             
             Button(action: onReset) {
                 Text("RESET")
-                    .font(.caption)
-                    .fontWeight(.light)
-                    .tracking(2)
-                    .frame(width: 160, height: 40)
-                    .background(Color.black)
-                    .foregroundColor(.white)
+                    .font(.system(size: 22, weight: .light))
+                    .tracking(4)
+                    .frame(height: 60)
+                    .frame(maxWidth: .infinity)
+                    .background(darkColor)
+                    .foregroundColor(creamColor)
             }
             .cornerRadius(10)
             .padding(.horizontal, 20)
+            .padding(.bottom, 50)
         }
-        .padding(40)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
+        .background(creamColor)
         .onReceive(timer) { input in
             now = input
         }
@@ -84,20 +107,24 @@ struct CountdownView: View {
     }
 }
 
-struct MinimalTimeBlock: View {
+struct TimeColumn: View {
     let value: Int
     let unit: String
+    let textColor: Color
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 8) {
             Text(String(format: "%02d", value))
-                .font(.system(size: 36, weight: .light, design: .default))
+                .font(.system(size: 56, weight: .light))
+                .foregroundColor(textColor)
                 .monospacedDigit()
             
             Text(unit)
-                .font(.system(size: 12, weight: .light, design: .default))
-                .padding(.top, 4)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(textColor)
+                .tracking(1)
         }
+        .frame(width: 80)
     }
 }
 
