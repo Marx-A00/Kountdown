@@ -44,6 +44,9 @@ struct SetupView: View {
                     .background(Color.black)
                     .foregroundColor(.white)
             }
+            .cornerRadius(10)
+            .padding(.horizontal, 20)
+            
         }
         .padding(.vertical, 50)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

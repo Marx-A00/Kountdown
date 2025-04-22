@@ -69,6 +69,8 @@ struct CountdownView: View {
                     .background(Color.black)
                     .foregroundColor(.white)
             }
+            .cornerRadius(10)
+            .padding(.horizontal, 20)
         }
         .padding(40)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
